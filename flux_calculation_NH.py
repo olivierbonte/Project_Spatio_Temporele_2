@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def OutfluxNH(NH_h, NH_d, vmax,Acell, deltat,deltax):
+def OutfluxNH(NH_h, NH_d, vmax, Acell, deltat, deltax, correction):
     '''
     Berkent de flux naar elk van de naburige cellen.
     Geeft deze terug in een array van lengte 4 (want 4 cellen).
@@ -19,8 +19,7 @@ def OutfluxNH(NH_h, NH_d, vmax,Acell, deltat,deltax):
     DWLs = np.zeros(len(NH_d_sorted)-1)
     for i in range(len(DWLs)):
         DWLs[i] = watersurface_elv_sorted[i+1]-watersurface_elv_sorted[i]
-    
-    #de 3 termen uit vgl (1) van Flood_analysis_bispdf
+
     dc = NH_d[2] #we definiëren centrale cell altijd als 3e input!, = d0
     V0 = dc*Acell
     rc = np.where(indices_sorted == 2)[0]   #rank of the central cell
@@ -52,18 +51,19 @@ def OutfluxNH(NH_h, NH_d, vmax,Acell, deltat,deltax):
     #vstars = np.zeros(len(Fout)) #the interfacial velocities
     WLC = watersurface_elv[2] #of the central cell
     zC = NH_h[2] #height of the centrall cell
-    for i in range(len(Fout)):
-        if i <= 1: #so for 1 and 2 (indices 0 and 1 in Fout)
-            WLN = watersurface_elv[i]
-            zN = NH_h[i]
-            dstar = np.max([WLC,WLN])-np.max([zN,zC])
-            vstar = Fout[i]/(deltax*deltat*dstar)
-        elif i > 1: #so for NH 4 and 5 (indices 2 and 3  in Fout)
-            WLN = watersurface_elv[i+1]
-            zN = NH_h[i+1]
-            dstar = np.max([WLC,WLN])-np.max([zN,zC])
-            vstar = Fout[i]/(deltax*deltat*dstar)
-        if vstar > vmax:
-            Fout[i] = vmax*deltax*deltat*dstar
+    if correction == True:
+        for i in range(len(Fout)):
+            if i <= 1: #so for 1 and 2 (indices 0 and 1 in Fout)
+                WLN = watersurface_elv[i]
+                zN = NH_h[i]
+                dstar = np.max([WLC,WLN])-np.max([zN,zC])
+                vstar = Fout[i]/(deltax*deltat*dstar)
+            elif i > 1: #so for NH 4 and 5 (indices 2 and 3  in Fout)
+                WLN = watersurface_elv[i+1]
+                zN = NH_h[i+1]
+                dstar = np.max([WLC,WLN])-np.max([zN,zC])
+                vstar = Fout[i]/(deltax*deltat*dstar)
+            if vstar > vmax:
+                Fout[i] = vmax*deltax*deltat*dstar
     return Fout
 
