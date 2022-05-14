@@ -22,8 +22,8 @@ grid[:,-1] = np.flip(right_edge)
 #calculate the otherpoints starting from the right edge
 for j in range(ny):
     sequence1 = np.arange(grid[j,-1],grid[j,-1]+(slopex*deltax)*(8),slopex*deltax)
-    sequence2 = np.arange(grid[j,-1]+(slopex*deltax)*(7),grid[j,-1]+(slopex*deltax)*(7-4),-slopex*deltax)
-    sequence3 = np.arange(grid[j,-1]+(slopex*deltax)*(7-3),grid[j,-1]+(slopex*deltax)*(8-3+16),slopex*deltax)
+    sequence2 = np.arange(grid[j,-1]+(slopex*deltax)*(8),grid[j,-1]+(slopex*deltax)*(8-3),-slopex*deltax)
+    sequence3 = np.arange(grid[j,-1]+(slopex*deltax)*(8-3),grid[j,-1]+(slopex*deltax)*(8-3+17),slopex*deltax)
     sequence = np.hstack([sequence1,sequence2,sequence3])
     grid[j,:] = np.flip(sequence)
 plt.figure(figsize= (7.5,7.5))

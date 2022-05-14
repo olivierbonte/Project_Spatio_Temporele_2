@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def OutfluxNH(NH_h, NH_d, vmax, Acell, deltat, deltax, correction):
+def OutfluxNH(NH_h, NH_d, Acell, deltat, deltax, correction, n): #voeg vmax_CFL toe later
     '''
     Berkent de flux naar elk van de naburige cellen.
     Geeft deze terug in een array van lengte 4 (want 4 cellen).
@@ -9,8 +9,11 @@ def OutfluxNH(NH_h, NH_d, vmax, Acell, deltat, deltax, correction):
     Benodigde inputs (altijd vologrode 1-> 5 voor buren)
     -NH_h: de hoogtes van de DEM van de NH
     -NH_d: de waterdieptes van de NH
-    -vmax: de maximaal toelaatbare 
     -Acell: constante oppervlakte van 1 grid cell
+    -deltat
+    -deltax
+    -correction voor de hele flux correctie
+    -n = manningscoefficient
     '''
     watersurface_elv = NH_h + NH_d #sommeer de twee
     indices_sorted = np.argsort(watersurface_elv)
@@ -52,17 +55,30 @@ def OutfluxNH(NH_h, NH_d, vmax, Acell, deltat, deltax, correction):
     WLC = watersurface_elv[2] #of the central cell
     zC = NH_h[2] #height of the centrall cell
     if correction == True:
+        d = dc #depth of the central cell
         for i in range(len(Fout)):
             if i <= 1: #so for 1 and 2 (indices 0 and 1 in Fout)
                 WLN = watersurface_elv[i]
                 zN = NH_h[i]
                 dstar = np.max([WLC,WLN])-np.max([zN,zC])
-                vstar = Fout[i]/(deltax*deltat*dstar)
+                if not(dstar == 0):
+                    vstar = Fout[i]/(deltax*deltat*dstar)
+                else:
+                    vstar = 0
+                S = np.abs(watersurface_elv[2]-watersurface_elv[i])/deltax
             elif i > 1: #so for NH 4 and 5 (indices 2 and 3  in Fout)
                 WLN = watersurface_elv[i+1]
                 zN = NH_h[i+1]
                 dstar = np.max([WLC,WLN])-np.max([zN,zC])
-                vstar = Fout[i]/(deltax*deltat*dstar)
+                if not(dstar == 0):
+                    vstar = Fout[i]/(deltax*deltat*dstar)
+                else:
+                    vstar = 0
+                S = np.abs(watersurface_elv[2]-watersurface_elv[i+1])/deltax
+            R = d
+            vmin1 = 1/n*R**(2/3)*S**(1/2)
+            vmin2 = 9.81*d
+            vmax  = np.min([vmin1,vmin2])
             if vstar > vmax:
                 Fout[i] = vmax*deltax*deltat*dstar
     return Fout
