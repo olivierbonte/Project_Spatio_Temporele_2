@@ -49,7 +49,7 @@ def OutfluxNH(NH_h, NH_d, Acell, deltat, deltax, correction, n, vmax_CFL): #voeg
     F2 = Fluxes[indices_sorted == 1]
     F4 = Fluxes[indices_sorted == 3]
     F5 = Fluxes[indices_sorted == 4]
-
+    
     Fout = np.hstack([F1,F2,F4,F5])
     #vstars = np.zeros(len(Fout)) #the interfacial velocities
     WLC = watersurface_elv[2] #of the central cell
