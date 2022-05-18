@@ -1,4 +1,6 @@
 #making the hypothetical grid
+
+#gaat uit van: 2 cellen op de crest even hoog, 2 cellen bij de pond even laag
 import numpy as np
 import matplotlib.pyplot as plt
 
