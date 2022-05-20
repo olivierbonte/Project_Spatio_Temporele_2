@@ -18,7 +18,7 @@ def gif_maken_bis(layers, tijdstappen, fps, naam_file):
             print( '.', end ='' )
 
         im.set_array(np.flipud(layers[i]))
-        ax.set_title('time = '+str(tijdstappen[i]/60) + 'min')
+        ax.set_title('time = '+str(np.round(tijdstappen[i]/60,2)) + 'min')
     
         return [im]
 
