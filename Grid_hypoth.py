@@ -36,7 +36,7 @@ plt.xlabel('x [m]')
 plt.ylabel('y [m]')
 
 
-plt.figure(figsize= (10,7.5))
+plt.figure(figsize= (15,10))
 X, Y = np.meshgrid(xs, ys)
 ax = plt.axes(projection='3d')
 im = ax.plot_surface(X, Y, grid, cmap = 'viridis')
@@ -44,4 +44,20 @@ plt.colorbar(im)
 plt.xlabel('x [m]')
 plt.ylabel('y [m]')
 ax.set_zlabel('height [m]')
-plt.title('3D representation of hypothtetical surface')
+#plt.title('3D representation of hypothtetical surface')
+#plt.savefig('Afbeeldingen/3D_hypoth_terrain.png', dpi = 600)
+
+plt.figure(figsize= (11,7))
+plt.imshow(np.flipud(grid), extent = [np.min(xs)-deltax/2, np.max(xs)+deltax/2,
+np.min(ys)-deltay/2,np.max(ys)+deltay/2])
+plt.colorbar()
+plt.annotate("Pond", xy=(875, 975), xytext=(750, 800),
+            arrowprops=dict(arrowstyle="->"))
+plt.annotate("CrestL", xy=(1025, 975), xytext=(950, 800),
+arrowprops=dict(arrowstyle="->"))
+plt.annotate("CrestR", xy=(1075, 975), xytext=(1150, 800),
+arrowprops=dict(arrowstyle="->"))
+#plt.title('Contourplot of hypothetical surface')
+plt.xlabel('x [m]')
+plt.ylabel('y [m]')
+plt.savefig('Afbeeldingen/hydrogrpah_locations.png', dpi = 600)
