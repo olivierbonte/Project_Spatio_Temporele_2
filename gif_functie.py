@@ -6,7 +6,8 @@ def gif_maken_bis(layers, tijdstappen, fps, naam_file):
     fig, ax = plt.subplots(figsize = (8,8))
     a = layers[0]
     im = plt.imshow(np.flipud(a), interpolation='none', vmin=0, vmax=np.max(layers[:]), cmap = 'binary', 
-    extent= [np.min(xs), np.max(xs), np.min(ys),np.max(ys)])
+    extent= [np.min(xs)-deltax/2, np.max(xs)+deltax/2, 
+    np.min(ys)-deltay/2,np.max(ys)+deltay/2])
     plt.colorbar(im)
     plt.xlabel('x [m]')
     plt.ylabel('y [m]')

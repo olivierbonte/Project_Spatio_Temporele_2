@@ -56,8 +56,8 @@ for j in range(ny):
 #plt.title('3D representation of hypothtetical surface')
 
 plt.figure(figsize= (7.5,7.5))
-plt.imshow(np.flipud(grid), extent = [np.min(xs), np.max(xs),
-np.min(ys),np.max(ys)])
+plt.imshow(np.flipud(grid), extent = [np.min(xs)-deltax/2, np.max(xs)+deltax/2,
+np.min(ys)-deltay/2,np.max(ys)+deltay/2])
 plt.colorbar()
 plt.title('Contourplot of hypothetical surface')
 plt.xlabel('x [m]')
