@@ -55,10 +55,11 @@ for j in range(ny):
 #ax.set_zlabel('height [m]')
 #plt.title('3D representation of hypothtetical surface')
 
-plt.figure(figsize= (7.5,7.5))
+plt.figure(figsize= (12,8))
 plt.imshow(np.flipud(grid), extent = [np.min(xs)-deltax/2, np.max(xs)+deltax/2,
 np.min(ys)-deltay/2,np.max(ys)+deltay/2])
 plt.colorbar()
-plt.title('Contourplot of hypothetical surface')
+#plt.title('Contourplot of hypothetical surface')
 plt.xlabel('x [m]')
 plt.ylabel('y [m]')
+plt.savefig('Afbeeldingen/DEM_stad',dpi = 300)
