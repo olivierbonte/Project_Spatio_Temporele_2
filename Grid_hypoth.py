@@ -46,6 +46,7 @@ plt.ylabel('y [m]')
 ax.set_zlabel('height [m]')
 #plt.title('3D representation of hypothtetical surface')
 plt.savefig('Afbeeldingen/3D_hypoth_terrain.png', dpi = 300)
+plt.savefig('AfbeeldingenPDF/3D_hypoth_terrain..pdf')
 
 plt.figure(figsize= (11,7))
 plt.imshow(np.flipud(grid), extent = [np.min(xs)-deltax/2, np.max(xs)+deltax/2,
@@ -61,3 +62,4 @@ arrowprops=dict(arrowstyle="->"))
 plt.xlabel('x [m]')
 plt.ylabel('y [m]')
 plt.savefig('Afbeeldingen/hydrogrpah_locations.png', dpi = 300)
+plt.savefig('AfbeeldingenPDF/hydrograph_locations.pdf')
